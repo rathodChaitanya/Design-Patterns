@@ -1,0 +1,96 @@
+1️⃣ What is Singleton (Simple Words)
+
+Singleton means:
+
+Only one object of a class can exist, and everyone uses the same object.
+
+Example in real life:
+
+Printer server 🖨️
+Configuration manager ⚙️
+Logger 📝
+
+
+
+Make Constructor Private
+
+We stop people from creating objects.
+
+class Notebook {
+
+    private Notebook() {
+        System.out.println("Notebook created");
+    }
+
+}
+
+Step 2 — Create Static Instance
+
+We create one object inside the class.
+
+class Notebook {
+
+    private static Notebook instance;
+
+    private Notebook() {}
+
+}
+
+
+Step 3 — Create Method to Access Object
+
+Add a method to get the object.
+
+class Notebook {
+
+    private static Notebook instance;
+
+    private Notebook() {}
+
+    public static Notebook getInstance() {
+
+        if(instance == null){
+            instance = new Notebook();
+        }
+
+        return instance;
+    }
+
+
+Step 4 — Add Functionality
+class Notebook {
+
+    private static Notebook instance;
+
+    private Notebook() {}
+
+    public static Notebook getInstance(){
+
+        if(instance == null){
+            instance = new Notebook();
+        }
+
+        return instance;
+    }
+
+    public void writeNote(String note){
+        System.out.println("Note: " + note);
+    }
+
+}
+
+
+Singleton is commonly used for shared system resources such as logger systems, configuration managers, cache managers, and database connection pool managers. These components need a single global instance to ensure consistency and efficient resource management across multiple threads.
+
+
+UserService userService = new UserService();
+
+But internally:
+
+Class.forName("UserService").newInstance();
+
+
+spring by default use singleton pattern
+@Service
+@Repository
+@RestController

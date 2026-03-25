@@ -1,0 +1,96 @@
+**Definition**
+
+Factory Pattern is used to create objects without exposing the creation logic to the client.
+
+Instead of using: new Object()
+We use a factory class to create objects. Client → Factory → Object
+===========================================================================================================
+** problem without factory **
+
+if(type.equals("EMAIL")){
+    notification = new EmailNotification();
+}
+else if(type.equals("SMS")){
+    notification = new SmsNotification();
+}
+
+Problems:
+
+❌ Too many if-else
+❌ Hard to extend
+❌ Tight coupling
+
+==========================================================================================================
+
+** pattern structure **
+
+Product Interface
+Concrete Product Classes
+Factory Class
+Client
+
+=======================================================================================================
+Step 1 — Create Interface
+interface Notification {
+
+    void send(String message);
+
+}
+----------------------------------------------------------
+Step 2 — Create Implementations
+
+Email notification
+
+class EmailNotification implements Notification {
+
+    public void send(String message){
+        System.out.println("Sending Email: " + message);
+    }
+
+}
+
+SMS notification
+
+class SmsNotification implements Notification {
+
+    public void send(String message){
+        System.out.println("Sending SMS: " + message);
+    }
+
+}
+-----------------------------------------------------------
+
+Step 3 — Create Factory
+class NotificationFactory {
+
+    public static Notification createNotification(String type){
+
+        if(type.equalsIgnoreCase("EMAIL")){
+            return new EmailNotification();
+        }
+
+        if(type.equalsIgnoreCase("SMS")){
+            return new SmsNotification();
+        }
+
+        throw new IllegalArgumentException("Invalid type");
+    }
+
+}
+--------------------------------------------------------------
+
+Step 4 — Client Code
+public class Main {
+
+    public static void main(String[] args){
+
+        Notification notification =
+            NotificationFactory.createNotification("EMAIL");
+
+        notification.send("Welcome to the system");
+
+    }
+
+}
+
+
